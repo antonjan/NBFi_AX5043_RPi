@@ -303,11 +303,14 @@ uint32_t NBFi_Get_RX_ACK_Mask()
 
 _Bool NBFi_Check_RX_Packet_Duplicate(nbfi_pfy_packet_t * pkt, uint8_t len)
 {
-    nbfi_pfy_packet_t *rec_pkt = &nbfi_RX_pktBuf[nbfi_state.DL_iter&0x1f]->phy_data;
+	if (nbfi_RX_pktBuf[nbfi_state.DL_iter&0x1f] == 0)
+		return 0;
 
-    for(uint8_t i = 0; i != len; i++)
+	nbfi_pfy_packet_t *rec_pkt = &nbfi_RX_pktBuf[nbfi_state.DL_iter&0x1f]->phy_data;
+	for(uint8_t i = 0; i != len; i++)
     {
-        if(((uint8_t*)rec_pkt)[i] != ((uint8_t*)pkt)[i]) return 0;
+		if(((uint8_t*)rec_pkt)[i] != ((uint8_t*)pkt)[i])
+			return 0;
     }
     return 1;
 }

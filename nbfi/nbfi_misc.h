@@ -45,7 +45,6 @@ typedef struct
 	uint8_t payload[0];	//begining of packet payload
 }nbfi_pfy_packet_t;
 
-
 /*NBFi transport layer packet struct*/
 typedef struct
 {

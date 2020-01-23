@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <iomanip>
 #include <mutex>
 #include <chrono>
 #include <thread>
@@ -192,7 +193,15 @@ uint32_t nbfi_update_rtc()
 
 void nbfi_rtc_synchronized(uint32_t time){}
 
-void nbfi_receive_complete(uint8_t * data, uint16_t length){}
+void nbfi_receive_complete(uint8_t * data, uint16_t len)
+{
+	std::cout << "recieved data 0x";
+	for (uint16_t i = 0; i < len; i++)
+		std::cout << std::setfill('0') << std::setw(2) << std::hex << (int)data[i];
+	std::cout << std::endl;
+	std::cout << "sended echo" << std::endl;
+	NBFi_Send(data, len);
+}
 
 void nbfi_reset(){}
 
